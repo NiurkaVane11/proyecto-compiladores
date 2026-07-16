@@ -7,14 +7,23 @@ Repositorio, ejercicios de Lex & Yacc
 - Muela Joset
 - Tumailli Favio
 
+
+
+
+
+
+
+
 ## Estructura del proyecto
 
+```
 COMPILADORES-GR2SW/
 └── IIB/
     ├── PRUEBA0/   Ejercicio 0: Reconocedor de secuencias 0^n 1^n (n>=1)
     ├── PRUEBA1/   Ejercicio 1: Calculadora ambigua (+, -)
     ├── PRUEBA2/   Ejercicio 2: Calculadora ambigua (+, -, *, /, ^, parentesis)
     └── PRUEBA3/   Gramatica NO ambigua para expresiones aritmeticas
+```
 
 Cada carpeta debe contener 7 archivos al terminar:
 - gcl.l — código fuente Lex
