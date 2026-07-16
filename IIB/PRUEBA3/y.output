@@ -1,0 +1,297 @@
+   0  $accept : programa $end
+
+   1  programa : programa linea
+   2           |
+
+   3  linea : E FIN
+   4        | FIN
+
+   5  E : T Eprima
+
+   6  Eprima : MAS T Eprima
+   7         | MENOS T Eprima
+   8         |
+
+   9  T : F Tprima
+
+  10  Tprima : POR F Tprima
+  11         | DIV F Tprima
+  12         |
+
+  13  F : PARI E PARD
+  14    | ID
+  15    | NUM
+
+state 0
+	$accept : . programa $end  (0)
+	programa : .  (2)
+
+	.  reduce 2
+
+	programa  goto 1
+
+
+state 1
+	$accept : programa . $end  (0)
+	programa : programa . linea  (1)
+
+	$end  accept
+	NUM  shift 2
+	ID  shift 3
+	PARI  shift 4
+	FIN  shift 5
+	.  error
+
+	E  goto 6
+	T  goto 7
+	F  goto 8
+	linea  goto 9
+
+
+state 2
+	F : NUM .  (15)
+
+	.  reduce 15
+
+
+state 3
+	F : ID .  (14)
+
+	.  reduce 14
+
+
+state 4
+	F : PARI . E PARD  (13)
+
+	NUM  shift 2
+	ID  shift 3
+	PARI  shift 4
+	.  error
+
+	E  goto 10
+	T  goto 7
+	F  goto 8
+
+
+state 5
+	linea : FIN .  (4)
+
+	.  reduce 4
+
+
+state 6
+	linea : E . FIN  (3)
+
+	FIN  shift 11
+	.  error
+
+
+state 7
+	E : T . Eprima  (5)
+	Eprima : .  (8)
+
+	MAS  shift 12
+	MENOS  shift 13
+	PARD  reduce 8
+	FIN  reduce 8
+
+	Eprima  goto 14
+
+
+state 8
+	T : F . Tprima  (9)
+	Tprima : .  (12)
+
+	POR  shift 15
+	DIV  shift 16
+	MAS  reduce 12
+	MENOS  reduce 12
+	PARD  reduce 12
+	FIN  reduce 12
+
+	Tprima  goto 17
+
+
+state 9
+	programa : programa linea .  (1)
+
+	.  reduce 1
+
+
+state 10
+	F : PARI E . PARD  (13)
+
+	PARD  shift 18
+	.  error
+
+
+state 11
+	linea : E FIN .  (3)
+
+	.  reduce 3
+
+
+state 12
+	Eprima : MAS . T Eprima  (6)
+
+	NUM  shift 2
+	ID  shift 3
+	PARI  shift 4
+	.  error
+
+	T  goto 19
+	F  goto 8
+
+
+state 13
+	Eprima : MENOS . T Eprima  (7)
+
+	NUM  shift 2
+	ID  shift 3
+	PARI  shift 4
+	.  error
+
+	T  goto 20
+	F  goto 8
+
+
+state 14
+	E : T Eprima .  (5)
+
+	.  reduce 5
+
+
+state 15
+	Tprima : POR . F Tprima  (10)
+
+	NUM  shift 2
+	ID  shift 3
+	PARI  shift 4
+	.  error
+
+	F  goto 21
+
+
+state 16
+	Tprima : DIV . F Tprima  (11)
+
+	NUM  shift 2
+	ID  shift 3
+	PARI  shift 4
+	.  error
+
+	F  goto 22
+
+
+state 17
+	T : F Tprima .  (9)
+
+	.  reduce 9
+
+
+state 18
+	F : PARI E PARD .  (13)
+
+	.  reduce 13
+
+
+state 19
+	Eprima : MAS T . Eprima  (6)
+	Eprima : .  (8)
+
+	MAS  shift 12
+	MENOS  shift 13
+	PARD  reduce 8
+	FIN  reduce 8
+
+	Eprima  goto 23
+
+
+state 20
+	Eprima : MENOS T . Eprima  (7)
+	Eprima : .  (8)
+
+	MAS  shift 12
+	MENOS  shift 13
+	PARD  reduce 8
+	FIN  reduce 8
+
+	Eprima  goto 24
+
+
+state 21
+	Tprima : POR F . Tprima  (10)
+	Tprima : .  (12)
+
+	POR  shift 15
+	DIV  shift 16
+	MAS  reduce 12
+	MENOS  reduce 12
+	PARD  reduce 12
+	FIN  reduce 12
+
+	Tprima  goto 25
+
+
+state 22
+	Tprima : DIV F . Tprima  (11)
+	Tprima : .  (12)
+
+	POR  shift 15
+	DIV  shift 16
+	MAS  reduce 12
+	MENOS  reduce 12
+	PARD  reduce 12
+	FIN  reduce 12
+
+	Tprima  goto 26
+
+
+state 23
+	Eprima : MAS T Eprima .  (6)
+
+	.  reduce 6
+
+
+state 24
+	Eprima : MENOS T Eprima .  (7)
+
+	.  reduce 7
+
+
+state 25
+	Tprima : POR F Tprima .  (10)
+
+	.  reduce 10
+
+
+state 26
+	Tprima : DIV F Tprima .  (11)
+
+	.  reduce 11
+
+
+11 terminals, 8 nonterminals
+16 grammar rules, 27 states
+
+grammar parser grammar
+symbol# value# symbol
+     0      0  $end
+     1    256  error
+     2    257  NUM
+     3    258  ID
+     4    259  MAS
+     5    260  MENOS
+     6    261  POR
+     7    262  DIV
+     8    263  PARI
+     9    264  PARD
+    10    265  FIN
+    11    266  $accept
+    12    267  programa
+    13    268  E
+    14    269  Eprima
+    15    270  T
+    16    271  Tprima
+    17    272  F
+    18    273  linea
